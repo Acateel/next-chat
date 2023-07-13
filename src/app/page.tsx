@@ -1,5 +1,7 @@
+import Button from "@/components/ui/Button";
+
 export default function Home() {
   return (
-    <div>Hello world</div>
+    <Button isLoading={false}>Click</Button>
   )
 }
