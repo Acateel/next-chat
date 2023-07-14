@@ -10,11 +10,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 interface AddFriendButtonProps {}
 
+/**
+ * type of form's data from zod validator
+ */
 type FormData = z.infer<typeof addFriendValidator>;
 
 const AddFriendButton: FC<AddFriendButtonProps> = ({}) => {
   const [showSuccessState, setShowSuccessState] = useState<boolean>(false);
 
+  /**
+   * Reach Hook for take response from validator
+   */
   const {
     register,
     handleSubmit,
@@ -26,22 +32,27 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({}) => {
 
   const addFriend = async (email: string) => {
     try {
+      // validate error
       const validatedEmail = addFriendValidator.parse({ email });
 
+      // send request in api for add friend
       await axios.post("/api/friends/add", {
         email: validatedEmail,
       });
 
       setShowSuccessState(true);
     } catch (error) {
+      // validation errors
       if (error instanceof z.ZodError) {
         setError("email", { message: error.message });
         return;
       }
+      // send request errors
       if (error instanceof AxiosError) {
         setError("email", { message: error.response?.data });
         return;
       }
+      // other errors
       setError("email", { message: "Sometiong went wrong." });
     }
   };
@@ -60,6 +71,7 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({}) => {
       </label>
       <div className="mt-2 flex gap-4">
         <input
+          // connect validation and input email
           {...register("email")}
           type="text"
           className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

@@ -40,6 +40,7 @@ const Page: FC<pageProps> = ({}) => {
             onClick={loginWithGoogle}
           >
             {isLoading ? null : (
+              // google logo
               <svg
                 className="mr-2 h-4 w-4"
                 aria-hidden="true"

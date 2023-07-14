@@ -7,6 +7,9 @@ interface ProvidersProps {
   children: ReactNode;
 }
 
+/**
+ * Provider for Toaster notification
+ */
 const Providers: FC<ProvidersProps> = ({ children }) => {
   return (
     <>
