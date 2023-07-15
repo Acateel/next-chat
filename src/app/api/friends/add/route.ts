@@ -12,19 +12,10 @@ export async function POST(req: Request) {
     const { email: emailToAdd } = addFriendValidator.parse(body.email);
 
     // find user in database
-    const RESTResponse = await fetch(
-      `${process.env.UPSTASH_REDIS_REST_URL}/get/user:email:${emailToAdd}`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`,
-        },
-        cache: "no-store",
-      }
-    );
-
-    // take user id
-    const data = (await RESTResponse.json()) as { result: string | null };
-    const idToAdd = data.result;
+    const idToAdd = (await fetchRedis(
+      "get",
+      `user:email:${emailToAdd}`
+    )) as string;
 
     // if user dont found
     if (!idToAdd) {
