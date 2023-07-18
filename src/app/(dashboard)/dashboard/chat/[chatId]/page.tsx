@@ -1,3 +1,4 @@
+import ChatInput from "@/components/ChatInput";
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -81,6 +82,8 @@ const Page = async ({ params }: PageProps) => {
           </div>
         </div>
       </div>
+
+      <ChatInput chatPartner={chatPartner} chatId={chatId} />
     </div>
   );
 };
