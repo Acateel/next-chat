@@ -20,3 +20,13 @@ export function chatHrefConstructor(id1: string, id2: string) {
   const sortedIds = [id1, id2].sort();
   return `${sortedIds[0]}--${sortedIds[1]}`;
 }
+
+/**
+ * Generate pussher key.
+ * replace celons in doble dash.
+ * @param key key with colon
+ * @returns pussher key with doble dash
+ */
+export function toPusherKey(key: string) {
+  return key.replace(/:/g, "__");
+}
