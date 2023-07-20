@@ -20,6 +20,9 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
    * Send message into api
    */
   const sendMessage = async () => {
+    // if input is empty, will not send messages
+    if (!input) return;
+
     setIsLoading(true);
 
     try {
