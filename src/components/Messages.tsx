@@ -2,7 +2,6 @@
 
 import { cn, toPusherKey } from "@/lib/utils";
 import { Message } from "@/lib/validations/message";
-import { format } from "date-fns";
 import { FC, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { pusherClient } from "@/lib/pusher";
@@ -26,7 +25,10 @@ const Messages: FC<MessagesProps> = ({
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
 
   const formatTimestamp = (timestamp: number) => {
-    return format(timestamp, "HH:mm");
+    const date = new Date(timestamp);
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    return `${hour}:${minute}`;
   };
 
   useEffect(() => {
