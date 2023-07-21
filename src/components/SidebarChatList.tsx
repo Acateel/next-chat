@@ -22,6 +22,7 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
+  const [acriveChats, setAcriveChats] = useState<User[]>(friends);
 
   useEffect(() => {
     if (pathname?.includes("chat")) {
@@ -58,8 +59,8 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
       setUnseenMessages((prev) => [...prev, message]);
     };
 
-    const newFriendHandler = () => {
-      router.refresh();
+    const newFriendHandler = (newFriend: User) => {
+      setAcriveChats((prev) => [...prev, newFriend]);
     };
 
     pusherClient.bind("new_message", chatHandler);
@@ -72,11 +73,11 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
       pusherClient.unbind("new_message", chatHandler);
       pusherClient.unbind("new_friend", newFriendHandler);
     };
-  }, [sessionId, router, pathname]);
+  }, [sessionId, router, pathname, friends]);
 
   return (
     <ul role="list" className="max-h-[25rem] overflow-y-auto -mx-2 space-y-1">
-      {friends.sort().map((friend) => {
+      {acriveChats.sort().map((friend) => {
         const unseenMessagesCount = unseenMessages.filter((unseenMsg) => {
           return unseenMsg.senderId === friend.id;
         }).length;
