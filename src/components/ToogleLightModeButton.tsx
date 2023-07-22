@@ -14,7 +14,7 @@ const ToogleLightModeButton: FC<ToogleModeProps> = ({}) => {
       onClick={() => (theme == 'dark' ? setTheme('light') : setTheme('dark'))}
       variant={theme == 'dark' ? 'ghost' : 'default'}
     >
-      {theme == 'dark' ? 'Light' : 'Dark'}
+      Light mode
     </Button>
   )
 }
