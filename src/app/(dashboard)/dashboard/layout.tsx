@@ -1,47 +1,48 @@
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { ReactNode } from "react";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { Icons, Icon } from "@/components/Icons";
-import Image from "next/image";
-import SignOutButton from "@/components/SignOutButton";
-import FriendRequestsSidebarOption from "@/components/FriendRequestsSidebarOption";
-import { fetchRedis } from "@/helpers/redis";
-import { getFriendsByUserId } from "@/helpers/get-friends-by-user-id";
-import SidebarChatList from "@/components/SidebarChatList";
-import MobileChatLayout from "@/components/MobileChatLayout";
-import { SidebarOption } from "@/types/typings";
+import { authOptions } from '@/lib/auth'
+import { getServerSession } from 'next-auth'
+import { ReactNode } from 'react'
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { Icons, Icon } from '@/components/Icons'
+import Image from 'next/image'
+import SignOutButton from '@/components/SignOutButton'
+import FriendRequestsSidebarOption from '@/components/FriendRequestsSidebarOption'
+import { fetchRedis } from '@/helpers/redis'
+import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
+import SidebarChatList from '@/components/SidebarChatList'
+import MobileChatLayout from '@/components/MobileChatLayout'
+import { SidebarOption } from '@/types/typings'
+import ToogleLightModeButton from '@/components/ToogleLightModeButton'
 
 interface LayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const sidebarOptions: SidebarOption[] = [
   {
     id: 1,
-    name: "Add friend",
-    href: "/dashboard/add",
-    Icon: "UserPlus",
+    name: 'Add friend',
+    href: '/dashboard/add',
+    Icon: 'UserPlus',
   },
-];
+]
 
 const Layout = async ({ children }: LayoutProps) => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
   if (!session) {
-    notFound();
+    notFound()
   }
 
-  const friends = await getFriendsByUserId(session.user.id);
+  const friends = await getFriendsByUserId(session.user.id)
 
   // take requests count from database
   const unseenRequestCount = (
     (await fetchRedis(
-      "smembers",
+      'smembers',
       `user:${session.user.id}:incoming_friend_requests`
     )) as User[]
-  ).length;
+  ).length
 
   return (
     <div className="w-full flex h-screen">
@@ -53,7 +54,7 @@ const Layout = async ({ children }: LayoutProps) => {
           unseenRequestCount={unseenRequestCount}
         />
       </div>
-      <div className="hidden md:flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+      <div className="hidden md:flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white dark:bg-gray-700 dark:border-gray-900 px-6">
         <Link href="/dashboard" className="flex h-16 shrink-0 items-center">
           <Icons.Logo className="h-8 w-auto text-indigo-600" />
         </Link>
@@ -76,7 +77,7 @@ const Layout = async ({ children }: LayoutProps) => {
 
               <ul role="list" className="-mx-2 mt-2 space-y-1">
                 {sidebarOptions.map((option) => {
-                  const OptionIcon = Icons[option.Icon];
+                  const OptionIcon = Icons[option.Icon]
                   return (
                     <li key={option.id}>
                       <Link
@@ -89,7 +90,7 @@ const Layout = async ({ children }: LayoutProps) => {
                         <span className="truncate">{option.name}</span>
                       </Link>
                     </li>
-                  );
+                  )
                 })}
                 {/* Friend Requests */}
                 <li>
@@ -100,6 +101,10 @@ const Layout = async ({ children }: LayoutProps) => {
                 </li>
               </ul>
             </li>
+            {/* ToogleLightMode */}
+            <li className="flex items-center justify-between">
+              <ToogleLightModeButton />
+            </li>
             {/* User profile information */}
             <li className="-mx-6 mt-auto flex items-center">
               <div className="flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
@@ -108,7 +113,7 @@ const Layout = async ({ children }: LayoutProps) => {
                     fill
                     referrerPolicy="no-referrer"
                     className="rounded-full"
-                    src={session.user.image || ""}
+                    src={session.user.image || ''}
                     alt="Your profile picture"
                   />
                 </div>
@@ -130,7 +135,7 @@ const Layout = async ({ children }: LayoutProps) => {
         {children}
       </aside>
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout
