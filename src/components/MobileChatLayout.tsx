@@ -13,7 +13,9 @@ import { SidebarOption } from '@/types/typings'
 import FriendRequestsSidebarOption from './FriendRequestsSidebarOption'
 import SignOutButton from './SignOutButton'
 import { usePathname } from 'next/navigation'
-import ToogleLightModeButton from './ToogleLightModeButton'
+import dynamic from 'next/dynamic'
+
+const ToogleLightModeButton = dynamic(() => import("@/components/ToogleLightModeButton"), {ssr: false})
 
 interface MobileChatLayoutProps {
   friends: User[]

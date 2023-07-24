@@ -12,7 +12,9 @@ import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
 import SidebarChatList from '@/components/SidebarChatList'
 import MobileChatLayout from '@/components/MobileChatLayout'
 import { SidebarOption } from '@/types/typings'
-import ToogleLightModeButton from '@/components/ToogleLightModeButton'
+import dynamic from 'next/dynamic'
+
+const ToogleLightModeButton = dynamic(() => import("@/components/ToogleLightModeButton"), {ssr: false})
 
 interface LayoutProps {
   children: ReactNode
