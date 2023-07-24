@@ -106,7 +106,7 @@ const Layout = async ({ children }: LayoutProps) => {
               <ToogleLightModeButton />
             </li>
             {/* User profile information */}
-            <li className="-mx-6 mt-auto flex items-center overflow-hidden">
+            <li className="-mx-6 mt-auto flex items-center relative">
               <div className="flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 dark:text-gray-200">
                 <div className="relative h-8 w-8 bg-gray-50 dark:bg-inherit">
                   <Image
@@ -131,7 +131,7 @@ const Layout = async ({ children }: LayoutProps) => {
                   </span>
                 </div>
               </div>
-              <SignOutButton className="h-full aspect-square" />
+              <SignOutButton className="h-full aspect-square absolute right-0" />
             </li>
           </ul>
         </nav>
