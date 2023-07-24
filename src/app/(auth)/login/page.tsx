@@ -1,25 +1,25 @@
-"use client";
+'use client'
 
-import Button from "@/components/ui/Button";
-import { FC, useState } from "react";
-import { signIn } from "next-auth/react";
-import { toast } from "react-hot-toast";
-import { Icons } from "@/components/Icons";
+import Button from '@/components/ui/Button'
+import { FC, useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { toast } from 'react-hot-toast'
+import { Icons } from '@/components/Icons'
 
 interface pageProps {}
 
 const Page: FC<pageProps> = ({}) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function loginWithGoogle() {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
-      await signIn("google");
+      await signIn('google')
     } catch (error) {
       // display error message to user
-      toast.error("Something went wrong with your login.");
+      toast.error('Something went wrong with your login.')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
@@ -29,7 +29,7 @@ const Page: FC<pageProps> = ({}) => {
         <div className="w-full flex flex-col items-center max-w-md space-y-8">
           <div className="flex flex-col items-center gap-8">
             <Icons.Logo className="h-8 w-auto text-indigo-600" />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-slate-200">
               Sign in to your account
             </h2>
           </div>
@@ -76,7 +76,7 @@ const Page: FC<pageProps> = ({}) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page
