@@ -102,8 +102,10 @@ const Layout = async ({ children }: LayoutProps) => {
               </ul>
             </li>
             {/* ToogleLightMode */}
-            <li className="flex items-center justify-between">
-              <ToogleLightModeButton />
+            <li className="h-full relative">
+              <div className="absolute bottom-0 left-0">
+                <ToogleLightModeButton />
+              </div>
             </li>
             {/* User profile information */}
             <li className="-mx-6 mt-auto flex items-center relative">
