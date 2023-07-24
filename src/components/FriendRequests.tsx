@@ -82,7 +82,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({
       ) : (
         friendRequests.map((request) => (
           <div key={request.senderId} className="flex gap-4 items-center">
-            <UserPlus className="text-black" />
+            <UserPlus className="text-black dark:text-gray-200" />
             <p className="font-medium text-lg">{request.senderEmail}</p>
             <button
               onClick={() => acceptFriend(request.senderId)}
