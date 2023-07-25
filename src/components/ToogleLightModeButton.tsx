@@ -21,7 +21,7 @@ const ToogleLightModeButton: FC<ToogleModeProps> = ({}) => {
           'h-6 w-6 rounded-full bg-gray-200 dark:bg-slate-600 absolute top-1 transition-all',
           {
             'left-1': !isDarkTheme,
-            'right-1': isDarkTheme,
+            'left-7': isDarkTheme,
           }
         )}
       >
