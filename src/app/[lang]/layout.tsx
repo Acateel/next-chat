@@ -1,11 +1,6 @@
 import Providers from '@/components/Providers'
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
-import { i18n } from '@/lib/locale/i18n-config'
-
-export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }))
-}
 
 export const metadata: Metadata = {
   title: 'Create Next App',
