@@ -1,6 +1,11 @@
 import Providers from '@/components/Providers'
-import './globals.css'
+import '@/styles/globals.css'
 import type { Metadata } from 'next'
+import { i18n } from '@/lib/locale/i18n-config'
+
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }))
+}
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -9,11 +14,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params
 }: {
   children: React.ReactNode
+  params: { lang: string }
 }) {
   return (
-    <html lang="en">
+    <html lang={params.lang}>
       <body className="dark:bg-slate-800">
         <Providers>{children}</Providers>
       </body>

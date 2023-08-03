@@ -1,6 +1,8 @@
 import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
 import { fetchRedis } from '@/helpers/redis'
 import { authOptions } from '@/lib/auth'
+import { getDictionary } from '@/lib/locale/get-dictionary'
+import { Locale } from '@/lib/locale/i18n-config'
 import { chatHrefConstructor } from '@/lib/utils'
 import { Message } from '@/lib/validations/message'
 import { ChevronRight } from 'lucide-react'
@@ -9,7 +11,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-const Page = async ({}) => {
+const Page = async ({params: {lang}}:{params: {lang: Locale}}) => {
+  const dictionary = await getDictionary(lang)
   const session = await getServerSession(authOptions)
   if (!session) notFound()
 
@@ -34,7 +37,7 @@ const Page = async ({}) => {
   return (
     <div className="container py-12">
       <h1 className="font-bold text-5xl mb-8 dark:text-indigo-100">
-        Recent cahts
+        {dictionary['test_component'].recent_cahts}
       </h1>
       {/* Show last messages */}
       {friendsWithLastMessage.length === 0 ? (
