@@ -8,7 +8,7 @@ import { Message } from '@/lib/validations/message'
 import { ChevronRight } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/ui/LocaleLink'
 import { notFound } from 'next/navigation'
 
 const Page = async ({params: {lang}}:{params: {lang: Locale}}) => {
@@ -54,7 +54,7 @@ const Page = async ({params: {lang}}:{params: {lang: Locale}}) => {
               <ChevronRight className="h-7 w-7 text-zinc-400" />
             </div>
 
-            <Link
+            <LocaleLink
               href={`/dashboard/chat/${chatHrefConstructor(
                 session.user.id,
                 friend.id
@@ -84,7 +84,7 @@ const Page = async ({params: {lang}}:{params: {lang: Locale}}) => {
                   {friend.lastMessage.text}
                 </p>
               </div>
-            </Link>
+            </LocaleLink>
           </div>
         ))
       )}

@@ -21,6 +21,7 @@ interface ExtendedMessage extends Message {
 const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
   const router = useRouter()
   const pathname = usePathname()
+  const [locale, setLocale] = useState<string>('')
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([])
   const [acriveChats, setAcriveChats] = useState<User[]>(friends)
 
@@ -30,6 +31,7 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
         return prev.filter((msg) => !pathname.includes(msg.senderId))
       })
     }
+    setLocale(pathname?.split('/')[1] ?? '')
   }, [pathname])
 
   useEffect(() => {
@@ -37,9 +39,11 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`))
 
     const chatHandler = (message: ExtendedMessage) => {
-      const shouldNotify =
-        pathname !==
-        `/dashboard/chat/${chatHrefConstructor(sessionId, message.senderId)}`
+      const chatPathname = `/dashboard/chat/${chatHrefConstructor(
+        sessionId,
+        message.senderId
+      )}`
+      const shouldNotify = pathname?.includes(chatPathname)
 
       if (!shouldNotify) return
 
@@ -48,8 +52,7 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
         //custom component
         <UnseenChatToast
           t={t}
-          sessionId={sessionId}
-          senderId={message.senderId}
+          href={`/${locale}${chatPathname}`}
           senderImg={message.senderImg}
           senderName={message.senderName}
           senderMessage={message.text}
@@ -73,7 +76,7 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
       pusherClient.unbind('new_message', chatHandler)
       pusherClient.unbind('new_friend', newFriendHandler)
     }
-  }, [sessionId, router, pathname, friends])
+  }, [sessionId, router, pathname, friends, locale])
 
   return (
     <ul role="list" className="max-h-[25rem] overflow-y-auto -mx-2 space-y-1">
@@ -85,7 +88,7 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
         return (
           <li key={friend.id}>
             <a
-              href={`/dashboard/chat/${chatHrefConstructor(
+              href={`/${locale}/dashboard/chat/${chatHrefConstructor(
                 sessionId,
                 friend.id
               )}`}

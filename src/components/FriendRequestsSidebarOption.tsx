@@ -3,7 +3,7 @@
 import { pusherClient } from '@/lib/pusher'
 import { toPusherKey } from '@/lib/utils'
 import { User } from 'lucide-react'
-import Link from 'next/link'
+import LocaleLink from './ui/LocaleLink'
 import { FC, useEffect, useState } from 'react'
 
 interface FriendRequestsSidebarOptionProps {
@@ -47,7 +47,7 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({
   }, [sessionId, unseenRequestCount])
 
   return (
-    <Link
+    <LocaleLink
       href="/dashboard/requests"
       className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 dark:text-zinc-50 dark:hover:bg-slate-600 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
     >
@@ -62,7 +62,7 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({
           {unseenRequestCount}
         </div>
       ) : null}
-    </Link>
+    </LocaleLink>
   )
 }
 

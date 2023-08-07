@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react'
 import { Menu, X } from 'lucide-react'
-import Link from 'next/link'
+import LocaleLink from './ui/LocaleLink'
 import { FC, Fragment, useEffect, useState } from 'react'
 import Button, { buttonVariants } from './ui/Button'
 import { Icons } from './Icons'
@@ -15,7 +15,10 @@ import SignOutButton from './SignOutButton'
 import { usePathname } from 'next/navigation'
 import dynamic from 'next/dynamic'
 
-const ToogleLightModeButton = dynamic(() => import("@/components/ToogleLightModeButton"), {ssr: false})
+const ToogleLightModeButton = dynamic(
+  () => import('@/components/ToogleLightModeButton'),
+  { ssr: false }
+)
 
 interface MobileChatLayoutProps {
   friends: User[]
@@ -40,12 +43,12 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
   return (
     <div className="fixed bg-zinc-50 border-b border-zinc-200 dark:bg-slate-700 dark:border-slate-800 top-0 inset-x-0 py-2 px-4">
       <div className="w-full flex justify-between items-center">
-        <Link
+        <LocaleLink
           href="/dashboard"
           className={buttonVariants({ variant: 'ghost' })}
         >
           <Icons.Logo className="h-6 w-auto text-indigo-600" />
-        </Link>
+        </LocaleLink>
         <Button
           onClick={() => setOpen(true)}
           className="gap-4 dark:bg-slate-600 dark:hover:bg-slate-500"
@@ -118,7 +121,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                                   const Icon = Icons[option.Icon]
                                   return (
                                     <li key={option.name}>
-                                      <Link
+                                      <LocaleLink
                                         href={option.href}
                                         className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 dark:text-zinc-50 dark:hover:bg-slate-600 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                                       >
@@ -128,7 +131,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                                         <span className="truncate">
                                           {option.name}
                                         </span>
-                                      </Link>
+                                      </LocaleLink>
                                     </li>
                                   )
                                 })}

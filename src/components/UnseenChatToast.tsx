@@ -1,21 +1,19 @@
-import { chatHrefConstructor, cn } from "@/lib/utils";
-import Image from "next/image";
-import { FC } from "react";
-import { toast, type Toast } from "react-hot-toast";
+import { chatHrefConstructor, cn } from '@/lib/utils'
+import Image from 'next/image'
+import { FC } from 'react'
+import { toast, type Toast } from 'react-hot-toast'
 
 interface UnseenChatToastProps {
-  t: Toast;
-  sessionId: string;
-  senderId: string;
-  senderImg: string;
-  senderName: string;
-  senderMessage: string;
+  t: Toast
+  href: string
+  senderImg: string
+  senderName: string
+  senderMessage: string
 }
 
 const UnseenChatToast: FC<UnseenChatToastProps> = ({
   t,
-  sessionId,
-  senderId,
+  href,
   senderImg,
   senderName,
   senderMessage,
@@ -23,16 +21,16 @@ const UnseenChatToast: FC<UnseenChatToastProps> = ({
   return (
     <div
       className={cn(
-        "max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5",
+        'max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5',
         {
-          "animate-enter": t.visible,
-          "animate-leave": !t.visible,
+          'animate-enter': t.visible,
+          'animate-leave': !t.visible,
         }
       )}
     >
       <a
         onClick={() => toast.dismiss(t.id)}
-        href={`/dashboard/chat/${chatHrefConstructor(sessionId, senderId)}`}
+        href={href}
         className="flex-1 w-0 p-4"
       >
         <div className="flex items-start">
@@ -63,7 +61,7 @@ const UnseenChatToast: FC<UnseenChatToastProps> = ({
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UnseenChatToast;
+export default UnseenChatToast
