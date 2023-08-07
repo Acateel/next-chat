@@ -13,6 +13,7 @@ import SidebarChatList from '@/components/SidebarChatList'
 import MobileChatLayout from '@/components/MobileChatLayout'
 import { SidebarOption } from '@/types/typings'
 import dynamic from 'next/dynamic'
+import LocaleSwitcher from '@/components/LocaleSwitcher'
 
 const ToogleLightModeButton = dynamic(() => import("@/components/ToogleLightModeButton"), {ssr: false})
 
@@ -103,10 +104,13 @@ const Layout = async ({ children }: LayoutProps) => {
                 </li>
               </ul>
             </li>
-            {/* ToogleLightMode */}
+            {/* Additional functions */}
             <li className="h-full relative">
               <div className="absolute bottom-0 left-0">
                 <ToogleLightModeButton />
+              </div>
+              <div className='absolute bottom-0 right-0'>
+                <LocaleSwitcher />
               </div>
             </li>
             {/* User profile information */}
