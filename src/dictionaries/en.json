@@ -1,5 +1,8 @@
 {
-    "test_component": {
-        "recent_cahts": "Recent cahts"
-    }
+  "dashboard": {
+    "recent_cahts": "Recent cahts",
+    "nothing_to_show_here": "Nothing to show here...",
+    "profile_picture": "profile picture",
+    "you": "You"
+  }
 }

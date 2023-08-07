@@ -1,5 +1,8 @@
 {
-    "test_component": {
-        "recent_cahts": "Недавные чаты"
-    }
+  "dashboard": {
+    "recent_cahts": "Недавные чаты",
+    "nothing_to_show_here": "Здесь ничего нет...",
+    "profile_picture": "изображения профиля",
+    "you": "Вы"
+  }
 }

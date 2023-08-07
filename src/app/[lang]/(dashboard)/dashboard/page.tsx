@@ -11,7 +11,7 @@ import Image from 'next/image'
 import LocaleLink from '@/components/ui/LocaleLink'
 import { notFound } from 'next/navigation'
 
-const Page = async ({params: {lang}}:{params: {lang: Locale}}) => {
+const Page = async ({ params: { lang } }: { params: { lang: Locale } }) => {
   const dictionary = await getDictionary(lang)
   const session = await getServerSession(authOptions)
   if (!session) notFound()
@@ -37,12 +37,12 @@ const Page = async ({params: {lang}}:{params: {lang: Locale}}) => {
   return (
     <div className="container py-12">
       <h1 className="font-bold text-5xl mb-8 dark:text-indigo-100">
-        {dictionary['test_component'].recent_cahts}
+        {dictionary['dashboard'].recent_cahts}
       </h1>
       {/* Show last messages */}
       {friendsWithLastMessage.length === 0 ? (
         <p className="text-sm text-zinc-500 dark:text-zinc-300">
-          Nothing to show here...
+          {dictionary['dashboard'].nothing_to_show_here}
         </p>
       ) : (
         friendsWithLastMessage.map((friend) => (
@@ -64,7 +64,7 @@ const Page = async ({params: {lang}}:{params: {lang: Locale}}) => {
               <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                 <div className="relative h-6 w-6">
                   <Image
-                    alt={`${friend.name} profile picture`}
+                    alt={`${friend.name} ${dictionary['dashboard'].profile_picture}`}
                     src={friend.image}
                     className="rounded-full"
                     referrerPolicy="no-referrer"
@@ -78,7 +78,7 @@ const Page = async ({params: {lang}}:{params: {lang: Locale}}) => {
                 <p className="mt-1 max-w-md">
                   <span className="text-zinc-400">
                     {friend.lastMessage.senderId === session.user.id
-                      ? 'You: '
+                      ? `${dictionary['dashboard'].you}: `
                       : ''}
                   </span>
                   {friend.lastMessage.text}
