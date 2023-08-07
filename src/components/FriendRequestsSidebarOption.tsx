@@ -9,11 +9,15 @@ import { FC, useEffect, useState } from 'react'
 interface FriendRequestsSidebarOptionProps {
   sessionId: string
   initialUnseenRequestCount: number
+  dictionary: {
+    friend_requests: string
+  }
 }
 
 const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({
   sessionId,
   initialUnseenRequestCount,
+  dictionary: { friend_requests },
 }) => {
   const [unseenRequestCount, setUnseenRequestCount] = useState<number>(
     initialUnseenRequestCount
@@ -55,7 +59,7 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({
         <User className="h-4 w-4" />
       </div>
 
-      <p className="truncate">Friend requests</p>
+      <p className="truncate">{friend_requests}</p>
 
       {unseenRequestCount > 0 ? (
         <div className="rounded-full w-5 h-5 text-xs flex justify-center items-center text-white bg-indigo-600">

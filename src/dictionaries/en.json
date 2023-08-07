@@ -4,5 +4,13 @@
     "nothing_to_show_here": "Nothing to show here...",
     "profile_picture": "profile picture",
     "you": "You"
+  },
+  "dashboard_layout": {
+    "your_chats": "Your chats",
+    "overview": "Overview",
+    "your_profile_picture": "Your profile picture",
+    "your_profile": "Your profile",
+    "add_friend": "Add friend",
+    "friend_requests": "Friend requests"
   }
 }

@@ -4,5 +4,13 @@
     "nothing_to_show_here": "Здесь ничего нет...",
     "profile_picture": "изображения профиля",
     "you": "Вы"
+  },
+  "dashboard_layout": {
+    "your_chats": "Ваши чаты",
+    "overview": "Обзор",
+    "your_profile_picture": "Ваше изображение профиля",
+    "your_profile": "Ваш профиль",
+    "add_friend": "Добавить в друзья",
+    "friend_requests": "Запросы в друзья"
   }
 }

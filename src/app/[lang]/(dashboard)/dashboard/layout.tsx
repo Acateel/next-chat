@@ -14,6 +14,8 @@ import { SidebarOption } from '@/types/typings'
 import dynamic from 'next/dynamic'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import LocaleLink from '@/components/ui/LocaleLink'
+import { Locale } from '@/lib/locale/i18n-config'
+import { getDictionary } from '@/lib/locale/get-dictionary'
 
 /**
  * Dissable ssr in ToogleLightModeButton for remove react error
@@ -25,23 +27,27 @@ const ToogleLightModeButton = dynamic(
 
 interface LayoutProps {
   children: ReactNode
+  params: {
+    lang: Locale
+  }
 }
 
-const sidebarOptions: SidebarOption[] = [
-  {
-    id: 1,
-    name: 'Add friend',
-    href: '/dashboard/add',
-    Icon: 'UserPlus',
-  },
-]
-
-const Layout = async ({ children }: LayoutProps) => {
+const Layout = async ({ children, params: { lang } }: LayoutProps) => {
+  const dictionary = await getDictionary(lang)
   const session = await getServerSession(authOptions)
 
   if (!session) {
     notFound()
   }
+
+  const sidebarOptions: SidebarOption[] = [
+    {
+      id: 1,
+      name: dictionary['dashboard_layout'].add_friend,
+      href: '/dashboard/add',
+      Icon: 'UserPlus',
+    },
+  ]
 
   const friends = await getFriendsByUserId(session.user.id)
 
@@ -72,7 +78,7 @@ const Layout = async ({ children }: LayoutProps) => {
         </LocaleLink>
         {friends.length > 0 ? (
           <div className="text-xs font-semibold leading-6 text-gray-400 dark:text-gray-100">
-            Your chats
+            {dictionary['dashboard_layout'].your_chats}
           </div>
         ) : null}
         <nav className="flex flex-1 flex-col">
@@ -84,7 +90,7 @@ const Layout = async ({ children }: LayoutProps) => {
             {/* Chats functions */}
             <li>
               <div className="text-xs font-semibold leading-6 text-gray-400 dark:text-gray-100">
-                Overview
+                {dictionary['dashboard_layout'].overview}
               </div>
 
               <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -109,6 +115,7 @@ const Layout = async ({ children }: LayoutProps) => {
                   <FriendRequestsSidebarOption
                     sessionId={session.user.id}
                     initialUnseenRequestCount={unseenRequestCount}
+                    dictionary={dictionary['dashboard_layout']}
                   />
                 </li>
               </ul>
@@ -131,11 +138,13 @@ const Layout = async ({ children }: LayoutProps) => {
                     referrerPolicy="no-referrer"
                     className="rounded-full"
                     src={session.user.image || ''}
-                    alt="Your profile picture"
+                    alt={dictionary['dashboard_layout'].your_profile_picture}
                   />
                 </div>
 
-                <span className="sr-only">Your profile</span>
+                <span className="sr-only">
+                  {dictionary['dashboard_layout'].your_profile}
+                </span>
                 <div className="flex flex-col">
                   <span aria-hidden="true" className="truncate">
                     {session.user.name}
