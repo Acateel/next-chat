@@ -83,7 +83,7 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({ dictionary }) => {
         />
         <Button>{dictionary.add}</Button>
       </div>
-      <p className="mt-1 text-sm text-red-600">{errors.email?.message}</p>
+      <p className="mt-1 text-sm text-red-600">{errors.email?.message && dictionary.invalid_email}</p>
       {showSuccessState ? (
         <p className="mt-1 text-sm text-green-600">
           {dictionary.friend_request_sent}

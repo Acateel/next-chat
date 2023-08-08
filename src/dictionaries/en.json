@@ -18,6 +18,7 @@
     "add_friend_by_email": "Add friend by E-Mail",
     "add": "Add",
     "something_went_wrong": "Something went wrong.",
-    "friend_request_sent": "Friend request sent!"
+    "friend_request_sent": "Friend request sent!",
+    "invalid_email": "Invalid email"
   }
 }
