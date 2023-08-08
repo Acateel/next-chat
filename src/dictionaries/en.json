@@ -12,5 +12,12 @@
     "your_profile": "Your profile",
     "add_friend": "Add friend",
     "friend_requests": "Friend requests"
+  },
+  "add_friend_page": {
+    "add_a_friend": "Add a friend",
+    "add_friend_by_email": "Add friend by E-Mail",
+    "add": "Add",
+    "something_went_wrong": "Something went wrong.",
+    "friend_request_sent": "Friend request sent!"
   }
 }

@@ -12,5 +12,12 @@
     "your_profile": "Ваш профиль",
     "add_friend": "Добавить в друзья",
     "friend_requests": "Запросы в друзья"
+  },
+  "add_friend_page": {
+    "add_a_friend": "Добавить в друзья",
+    "add_friend_by_email": "Добавить друга по электронной почте",
+    "add": "Добавить",
+    "sometiong_went_wrong": "Что-то пошло не так.",
+    "friend_request_sent": "Запрос в друзья отправлен!"
   }
 }
