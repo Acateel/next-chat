@@ -3,17 +3,21 @@
 import { pusherClient } from '@/lib/pusher'
 import { toPusherKey } from '@/lib/utils'
 import { User } from 'lucide-react'
-import Link from 'next/link'
+import LocaleLink from './ui/LocaleLink'
 import { FC, useEffect, useState } from 'react'
 
 interface FriendRequestsSidebarOptionProps {
   sessionId: string
   initialUnseenRequestCount: number
+  dictionary: {
+    friend_requests: string
+  }
 }
 
 const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({
   sessionId,
   initialUnseenRequestCount,
+  dictionary: { friend_requests },
 }) => {
   const [unseenRequestCount, setUnseenRequestCount] = useState<number>(
     initialUnseenRequestCount
@@ -47,7 +51,7 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({
   }, [sessionId, unseenRequestCount])
 
   return (
-    <Link
+    <LocaleLink
       href="/dashboard/requests"
       className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 dark:text-zinc-50 dark:hover:bg-slate-600 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
     >
@@ -55,14 +59,14 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({
         <User className="h-4 w-4" />
       </div>
 
-      <p className="truncate">Friend requests</p>
+      <p className="truncate">{friend_requests}</p>
 
       {unseenRequestCount > 0 ? (
         <div className="rounded-full w-5 h-5 text-xs flex justify-center items-center text-white bg-indigo-600">
           {unseenRequestCount}
         </div>
       ) : null}
-    </Link>
+    </LocaleLink>
   )
 }
 

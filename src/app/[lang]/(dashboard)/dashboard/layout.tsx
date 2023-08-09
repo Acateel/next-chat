@@ -2,8 +2,7 @@ import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
 import { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { Icons, Icon } from '@/components/Icons'
+import { Icons } from '@/components/Icons'
 import Image from 'next/image'
 import SignOutButton from '@/components/SignOutButton'
 import FriendRequestsSidebarOption from '@/components/FriendRequestsSidebarOption'
@@ -13,28 +12,42 @@ import SidebarChatList from '@/components/SidebarChatList'
 import MobileChatLayout from '@/components/MobileChatLayout'
 import { SidebarOption } from '@/types/typings'
 import dynamic from 'next/dynamic'
+import LocaleSwitcher from '@/components/LocaleSwitcher'
+import LocaleLink from '@/components/ui/LocaleLink'
+import { Locale } from '@/lib/locale/i18n-config'
+import { getDictionary } from '@/lib/locale/get-dictionary'
 
-const ToogleLightModeButton = dynamic(() => import("@/components/ToogleLightModeButton"), {ssr: false})
+/**
+ * Dissable ssr in ToogleLightModeButton for remove react error
+ */
+const ToogleLightModeButton = dynamic(
+  () => import('@/components/ToogleLightModeButton'),
+  { ssr: false }
+)
 
 interface LayoutProps {
   children: ReactNode
+  params: {
+    lang: Locale
+  }
 }
 
-const sidebarOptions: SidebarOption[] = [
-  {
-    id: 1,
-    name: 'Add friend',
-    href: '/dashboard/add',
-    Icon: 'UserPlus',
-  },
-]
-
-const Layout = async ({ children }: LayoutProps) => {
+const Layout = async ({ children, params: { lang } }: LayoutProps) => {
+  const dictionary = await getDictionary(lang)
   const session = await getServerSession(authOptions)
 
   if (!session) {
     notFound()
   }
+
+  const sidebarOptions: SidebarOption[] = [
+    {
+      id: 1,
+      name: dictionary['dashboard_layout'].add_friend,
+      href: '/dashboard/add',
+      Icon: 'UserPlus',
+    },
+  ]
 
   const friends = await getFriendsByUserId(session.user.id)
 
@@ -54,27 +67,35 @@ const Layout = async ({ children }: LayoutProps) => {
           session={session}
           sidebarOptions={sidebarOptions}
           unseenRequestCount={unseenRequestCount}
+          dictionary={dictionary['dashboard_layout']}
         />
       </div>
       <div className="hidden md:flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white dark:bg-slate-700 dark:border-slate-800 px-6">
-        <Link href="/dashboard" className="flex h-16 shrink-0 items-center">
+        <LocaleLink
+          href="/dashboard"
+          className="flex h-16 shrink-0 items-center"
+        >
           <Icons.Logo className="h-8 w-auto text-indigo-400" />
-        </Link>
+        </LocaleLink>
         {friends.length > 0 ? (
           <div className="text-xs font-semibold leading-6 text-gray-400 dark:text-gray-100">
-            Your chats
+            {dictionary['dashboard_layout'].your_chats}
           </div>
         ) : null}
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
             {/* Chats list */}
             <li>
-              <SidebarChatList friends={friends} sessionId={session.user.id} />
+              <SidebarChatList
+                friends={friends}
+                sessionId={session.user.id}
+                dictionary={dictionary['dashboard_layout']}
+              />
             </li>
             {/* Chats functions */}
             <li>
               <div className="text-xs font-semibold leading-6 text-gray-400 dark:text-gray-100">
-                Overview
+                {dictionary['dashboard_layout'].overview}
               </div>
 
               <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -82,7 +103,7 @@ const Layout = async ({ children }: LayoutProps) => {
                   const OptionIcon = Icons[option.Icon]
                   return (
                     <li key={option.id}>
-                      <Link
+                      <LocaleLink
                         href={option.href}
                         className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 dark:text-zinc-50 dark:hover:bg-slate-600 group flex gap-3 rounded-md p-2 text-sm leading-6 font-semibold"
                       >
@@ -90,7 +111,7 @@ const Layout = async ({ children }: LayoutProps) => {
                           <OptionIcon className="h-4 w-4" />
                         </span>
                         <span className="truncate">{option.name}</span>
-                      </Link>
+                      </LocaleLink>
                     </li>
                   )
                 })}
@@ -99,14 +120,16 @@ const Layout = async ({ children }: LayoutProps) => {
                   <FriendRequestsSidebarOption
                     sessionId={session.user.id}
                     initialUnseenRequestCount={unseenRequestCount}
+                    dictionary={dictionary['dashboard_layout']}
                   />
                 </li>
               </ul>
             </li>
-            {/* ToogleLightMode */}
+            {/* Additional functions */}
             <li className="h-full relative">
-              <div className="absolute bottom-0 left-0">
+              <div className="absolute bottom-0 w-full flex flex-row items-center justify-between">
                 <ToogleLightModeButton />
+                <LocaleSwitcher />
               </div>
             </li>
             {/* User profile information */}
@@ -118,11 +141,13 @@ const Layout = async ({ children }: LayoutProps) => {
                     referrerPolicy="no-referrer"
                     className="rounded-full"
                     src={session.user.image || ''}
-                    alt="Your profile picture"
+                    alt={dictionary['dashboard_layout'].your_profile_picture}
                   />
                 </div>
 
-                <span className="sr-only">Your profile</span>
+                <span className="sr-only">
+                  {dictionary['dashboard_layout'].your_profile}
+                </span>
                 <div className="flex flex-col">
                   <span aria-hidden="true" className="truncate">
                     {session.user.name}

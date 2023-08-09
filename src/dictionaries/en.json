@@ -1,0 +1,40 @@
+{
+  "login": {
+    "sign_in": "Sign in to your account",
+    "something_went_wrong": "Something went wrong with your login."
+  },
+  "dashboard": {
+    "recent_cahts": "Recent cahts",
+    "nothing_to_show_here": "Nothing to show here...",
+    "profile_picture": "profile picture",
+    "you": "You"
+  },
+  "dashboard_layout": {
+    "your_chats": "Your chats",
+    "overview": "Overview",
+    "your_profile_picture": "Your profile picture",
+    "your_profile": "Your profile",
+    "add_friend": "Add friend",
+    "friend_requests": "Friend requests",
+    "menu": "Menu",
+    "dashboard": "Dashboard",
+    "close_panel": "Close panel",
+    "close": "Close"
+  },
+  "add_friend_page": {
+    "add_a_friend": "Add a friend",
+    "add_friend_by_email": "Add friend by E-Mail",
+    "add": "Add",
+    "something_went_wrong": "Something went wrong.",
+    "friend_request_sent": "Friend request sent!",
+    "invalid_email": "Invalid email"
+  },
+  "friend_request_page": {
+    "add_a_friend": "Add a friend",
+    "nothing_to_show_here": "Nothing to show here..."
+  },
+  "chat_page": {
+    "post": "Post",
+    "message": "Message"
+  }
+}

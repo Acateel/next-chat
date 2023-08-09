@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react'
 import { Menu, X } from 'lucide-react'
-import Link from 'next/link'
+import LocaleLink from './ui/LocaleLink'
 import { FC, Fragment, useEffect, useState } from 'react'
 import Button, { buttonVariants } from './ui/Button'
 import { Icons } from './Icons'
@@ -13,15 +13,24 @@ import { SidebarOption } from '@/types/typings'
 import FriendRequestsSidebarOption from './FriendRequestsSidebarOption'
 import SignOutButton from './SignOutButton'
 import { usePathname } from 'next/navigation'
+import LocaleSwitcher from './LocaleSwitcher'
 import dynamic from 'next/dynamic'
 
-const ToogleLightModeButton = dynamic(() => import("@/components/ToogleLightModeButton"), {ssr: false})
+const ToogleLightModeButton = dynamic(
+  () => import('@/components/ToogleLightModeButton'),
+  { ssr: false }
+)
 
 interface MobileChatLayoutProps {
   friends: User[]
   session: Session
   sidebarOptions: SidebarOption[]
   unseenRequestCount: number
+  dictionary: {
+    friend_requests: string
+    close: string
+    [key: string]: string
+  }
 }
 
 const MobileChatLayout: FC<MobileChatLayoutProps> = ({
@@ -29,6 +38,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
   session,
   sidebarOptions,
   unseenRequestCount,
+  dictionary,
 }) => {
   const [open, setOpen] = useState<boolean>(false)
 
@@ -40,17 +50,17 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
   return (
     <div className="fixed bg-zinc-50 border-b border-zinc-200 dark:bg-slate-700 dark:border-slate-800 top-0 inset-x-0 py-2 px-4">
       <div className="w-full flex justify-between items-center">
-        <Link
+        <LocaleLink
           href="/dashboard"
           className={buttonVariants({ variant: 'ghost' })}
         >
           <Icons.Logo className="h-6 w-auto text-indigo-600" />
-        </Link>
+        </LocaleLink>
         <Button
           onClick={() => setOpen(true)}
           className="gap-4 dark:bg-slate-600 dark:hover:bg-slate-500"
         >
-          Menu <Menu className="h-6 w-6" />
+          {dictionary.menu} <Menu className="h-6 w-6" />
         </Button>
       </div>
       <Transition.Root show={open} as={Fragment}>
@@ -74,7 +84,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-gray-900 dark:text-gray-50">
-                            Dashboard
+                            {dictionary.dashboard}
                           </Dialog.Title>
                           <div className="ml-3 flex h-7 items-center">
                             <button
@@ -82,7 +92,9 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                               className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                               onClick={() => setOpen(false)}
                             >
-                              <span className="sr-only">Close panel</span>
+                              <span className="sr-only">
+                                {dictionary.close_panel}
+                              </span>
                               <X className="h-6 w-6" aria-hidden="true" />
                             </button>
                           </div>
@@ -93,7 +105,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
 
                         {friends.length > 0 ? (
                           <div className="text-xs font-semibold leading-6 text-gray-400 dark:text-gray-100">
-                            Your chats
+                            {dictionary.your_chats}
                           </div>
                         ) : null}
 
@@ -106,19 +118,20 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                               <SidebarChatList
                                 friends={friends}
                                 sessionId={session.user.id}
+                                dictionary={dictionary}
                               />
                             </li>
 
                             <li>
                               <div className="text-xs font-semibold leading-6 text-gray-400 dark:text-gray-100">
-                                Overview
+                                {dictionary.overview}
                               </div>
                               <ul role="list" className="-mx-2 mt-2 space-y-1">
                                 {sidebarOptions.map((option) => {
                                   const Icon = Icons[option.Icon]
                                   return (
                                     <li key={option.name}>
-                                      <Link
+                                      <LocaleLink
                                         href={option.href}
                                         className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 dark:text-zinc-50 dark:hover:bg-slate-600 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                                       >
@@ -128,7 +141,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                                         <span className="truncate">
                                           {option.name}
                                         </span>
-                                      </Link>
+                                      </LocaleLink>
                                     </li>
                                   )
                                 })}
@@ -139,15 +152,17 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                                       unseenRequestCount
                                     }
                                     sessionId={session.user.id}
+                                    dictionary={dictionary}
                                   />
                                 </li>
                               </ul>
                             </li>
 
-                            {/* ToogleLightMode */}
-                            <li className="relative mt-8">
-                              <div className="absolute bottom-0 left-0">
+                            {/* Additional functions */}
+                            <li className="h-full relative pt-16">
+                              <div className="absolute bottom-0 w-full flex flex-row items-center justify-between">
                                 <ToogleLightModeButton />
+                                <LocaleSwitcher />
                               </div>
                             </li>
 
@@ -159,11 +174,13 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                                     referrerPolicy="no-referrer"
                                     className="rounded-full"
                                     src={session.user.image || ''}
-                                    alt="Your profile picture"
+                                    alt={dictionary.your_profile_picture}
                                   />
                                 </div>
 
-                                <span className="sr-only">Your profile</span>
+                                <span className="sr-only">
+                                  {dictionary.your_profile}
+                                </span>
                                 <div className="flex flex-col">
                                   <span aria-hidden="true">
                                     {session.user.name}

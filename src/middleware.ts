@@ -1,49 +1,30 @@
-import { getToken } from "next-auth/jwt";
-import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
+import { withAuth } from 'next-auth/middleware'
+import authMiddleware from './lib/middlewares/authMiddleware'
+import localeMiddleware from './lib/middlewares/localeMiddleware'
 
+/**
+ * Middleware
+ */
 export default withAuth(
   async function middleware(req) {
-    const pathname = req.nextUrl.pathname;
-
-    // Manage route protection
-    const isAuth = await getToken({ req });
-    const isLoginPage = pathname.startsWith("/login");
-
-    const sensitiveRoutes = ["/dashboard"];
-    const isAccessingSensitiveRoute = sensitiveRoutes.some((route) =>
-      pathname.startsWith(route)
-    );
-
-    if (isLoginPage) {
-      if (isAuth) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
-      }
-
-      return NextResponse.next();
-    }
-
-    if (!isAuth && isAccessingSensitiveRoute) {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    if (pathname === "/") {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
-    }
+    const pathname = await authMiddleware(req)
+    const response = localeMiddleware(req, pathname)
+    return response
   },
   {
     // callbacks for call widleware every time
     callbacks: {
       async authorized() {
-        return true;
+        return true
       },
     },
   }
-);
+)
 
 /**
  * With what pages middleware will work
  */
 export const config = {
-  matchter: ["/", "/login", "/dashboard/:path*"],
-};
+  // Matcher ignoring `/_next/` and `/api/`
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+}

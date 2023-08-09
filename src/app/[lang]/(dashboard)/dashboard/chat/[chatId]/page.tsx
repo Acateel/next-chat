@@ -3,6 +3,8 @@ import Messages from "@/components/Messages";
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { getDictionary } from "@/lib/locale/get-dictionary";
+import { Locale } from "@/lib/locale/i18n-config";
 import { messageArrayValidator } from "@/lib/validations/message";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -11,6 +13,7 @@ import { notFound } from "next/navigation";
 interface PageProps {
   params: {
     chatId: string;
+    lang: Locale
   };
 }
 
@@ -37,8 +40,10 @@ async function getChatMessages(chatId: string) {
   }
 }
 
-const Page = async ({ params }: PageProps) => {
-  const { chatId } = params;
+const Page = async ({ params }: PageProps) => {  
+  const { chatId, lang } = params;
+  
+  const dictionary = await getDictionary(lang)
 
   // take user form session
   const session = await getServerSession(authOptions);
@@ -94,7 +99,7 @@ const Page = async ({ params }: PageProps) => {
         chatPartner={chatPartner}
         chatId={chatId}
       />
-      <ChatInput chatPartner={chatPartner} chatId={chatId} />
+      <ChatInput chatPartner={chatPartner} chatId={chatId} dictionary={dictionary['chat_page']} />
     </div>
   );
 };

@@ -1,15 +1,18 @@
 import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
 import { fetchRedis } from '@/helpers/redis'
 import { authOptions } from '@/lib/auth'
+import { getDictionary } from '@/lib/locale/get-dictionary'
+import { Locale } from '@/lib/locale/i18n-config'
 import { chatHrefConstructor } from '@/lib/utils'
 import { Message } from '@/lib/validations/message'
 import { ChevronRight } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/ui/LocaleLink'
 import { notFound } from 'next/navigation'
 
-const Page = async ({}) => {
+const Page = async ({ params: { lang } }: { params: { lang: Locale } }) => {
+  const dictionary = await getDictionary(lang)
   const session = await getServerSession(authOptions)
   if (!session) notFound()
 
@@ -34,12 +37,12 @@ const Page = async ({}) => {
   return (
     <div className="container py-12">
       <h1 className="font-bold text-5xl mb-8 dark:text-indigo-100">
-        Recent cahts
+        {dictionary['dashboard'].recent_cahts}
       </h1>
       {/* Show last messages */}
       {friendsWithLastMessage.length === 0 ? (
         <p className="text-sm text-zinc-500 dark:text-zinc-300">
-          Nothing to show here...
+          {dictionary['dashboard'].nothing_to_show_here}
         </p>
       ) : (
         friendsWithLastMessage.map((friend) => (
@@ -51,7 +54,7 @@ const Page = async ({}) => {
               <ChevronRight className="h-7 w-7 text-zinc-400" />
             </div>
 
-            <Link
+            <LocaleLink
               href={`/dashboard/chat/${chatHrefConstructor(
                 session.user.id,
                 friend.id
@@ -61,7 +64,7 @@ const Page = async ({}) => {
               <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
                 <div className="relative h-6 w-6">
                   <Image
-                    alt={`${friend.name} profile picture`}
+                    alt={`${friend.name} ${dictionary['dashboard'].profile_picture}`}
                     src={friend.image}
                     className="rounded-full"
                     referrerPolicy="no-referrer"
@@ -75,13 +78,13 @@ const Page = async ({}) => {
                 <p className="mt-1 max-w-md">
                   <span className="text-zinc-400">
                     {friend.lastMessage.senderId === session.user.id
-                      ? 'You: '
+                      ? `${dictionary['dashboard'].you}: `
                       : ''}
                   </span>
                   {friend.lastMessage.text}
                 </p>
               </div>
-            </Link>
+            </LocaleLink>
           </div>
         ))
       )}

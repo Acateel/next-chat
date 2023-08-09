@@ -1,43 +1,46 @@
-"use client";
+'use client'
 
-import { FC, useRef, useState } from "react";
-import TextareaAutosize from "react-textarea-autosize";
-import Button from "./ui/Button";
-import axios from "axios";
-import { toast } from "react-hot-toast";
+import { FC, useRef, useState } from 'react'
+import TextareaAutosize from 'react-textarea-autosize'
+import Button from './ui/Button'
+import axios from 'axios'
+import { toast } from 'react-hot-toast'
 
 interface ChatInputProps {
-  chatPartner: User;
-  chatId: string;
+  chatPartner: User
+  chatId: string
+  dictionary: {
+    [key: string]: string
+  }
 }
 
-const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [input, setInput] = useState<string>("");
+const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId, dictionary }) => {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [input, setInput] = useState<string>('')
 
   /**
    * Send message into api
    */
   const sendMessage = async () => {
     // if input is empty, will not send messages
-    if (!input) return;
+    if (!input) return
 
-    setIsLoading(true);
+    setIsLoading(true)
 
     try {
-      await axios.post("/api/message/send", {
+      await axios.post('/api/message/send', {
         text: input,
         chatId,
-      });
-      setInput("");
-      textareaRef.current?.focus();
+      })
+      setInput('')
+      textareaRef.current?.focus()
     } catch {
-      toast.error("Something went wrong. Please tyr again later.");
+      toast.error('Something went wrong. Please tyr again later.')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className="border-t border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
@@ -45,15 +48,15 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
         <TextareaAutosize
           ref={textareaRef}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              sendMessage();
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault()
+              sendMessage()
             }
           }}
           rows={1}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={`Message ${chatPartner.name}`}
+          placeholder={`${dictionary.message} ${chatPartner.name}`}
           className="block w-full resize-none border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6 dark:text-gray-50"
         />
 
@@ -72,13 +75,13 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
         <div className="absolute right-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
           <div className="flex-shrink-0">
             <Button isLoading={isLoading} onClick={sendMessage} type="submit">
-              Post
+              {dictionary.post}
             </Button>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChatInput;
+export default ChatInput
