@@ -158,12 +158,10 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                               </ul>
                             </li>
 
-                            {/* ToogleLightMode */}
-                            <li className="relative mt-8">
-                              <div className="absolute bottom-0 left-0">
+                            {/* Additional functions */}
+                            <li className="h-full relative pt-16">
+                              <div className="absolute bottom-0 w-full flex flex-row items-center justify-between">
                                 <ToogleLightModeButton />
-                              </div>
-                              <div className="absolute bottom-0 right-0">
                                 <LocaleSwitcher />
                               </div>
                             </li>

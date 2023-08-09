@@ -127,10 +127,8 @@ const Layout = async ({ children, params: { lang } }: LayoutProps) => {
             </li>
             {/* Additional functions */}
             <li className="h-full relative">
-              <div className="absolute bottom-0 left-0">
+              <div className="absolute bottom-0 w-full flex flex-row items-center justify-between">
                 <ToogleLightModeButton />
-              </div>
-              <div className="absolute bottom-0 right-0">
                 <LocaleSwitcher />
               </div>
             </li>
