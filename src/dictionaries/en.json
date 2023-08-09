@@ -34,6 +34,7 @@
     "nothing_to_show_here": "Nothing to show here..."
   },
   "chat_page": {
-    "post": "Post"
+    "post": "Post",
+    "message": "Message"
   }
 }
