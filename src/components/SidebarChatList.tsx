@@ -45,9 +45,9 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
       )}`
       const shouldNotify = pathname?.includes(chatPathname)
 
-      if (!shouldNotify) return
+      if (shouldNotify) return
 
-      // shod be notified
+      // should be notified
       toast.custom((t) => (
         //custom component
         <UnseenChatToast
