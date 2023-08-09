@@ -86,7 +86,11 @@ const Layout = async ({ children, params: { lang } }: LayoutProps) => {
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
             {/* Chats list */}
             <li>
-              <SidebarChatList friends={friends} sessionId={session.user.id} />
+              <SidebarChatList
+                friends={friends}
+                sessionId={session.user.id}
+                dictionary={dictionary['dashboard_layout']}
+              />
             </li>
             {/* Chats functions */}
             <li>

@@ -9,6 +9,9 @@ interface UnseenChatToastProps {
   senderImg: string
   senderName: string
   senderMessage: string
+  dictionary: {
+    close: string
+  }
 }
 
 const UnseenChatToast: FC<UnseenChatToastProps> = ({
@@ -17,6 +20,7 @@ const UnseenChatToast: FC<UnseenChatToastProps> = ({
   senderImg,
   senderName,
   senderMessage,
+  dictionary,
 }) => {
   return (
     <div
@@ -57,7 +61,7 @@ const UnseenChatToast: FC<UnseenChatToastProps> = ({
           onClick={() => toast.dismiss(t.id)}
           className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus: ring-2 focus:ring-indigo-500"
         >
-          Close
+          {dictionary.close}
         </button>
       </div>
     </div>

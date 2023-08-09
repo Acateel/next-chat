@@ -1,7 +1,7 @@
 {
   "login": {
     "sign_in": "Войдите в свой аккаунт",
-    "something_went_wrong":"Что-то пошло не так с вашой авторизацией."
+    "something_went_wrong": "Что-то пошло не так с вашой авторизацией."
   },
   "dashboard": {
     "recent_cahts": "Недавные чаты",
@@ -18,7 +18,8 @@
     "friend_requests": "Запросы в друзья",
     "menu": "Меню",
     "dashboard": "Панель",
-    "close_panel": "Закрить панель"
+    "close_panel": "Закрить панель",
+    "close": "Закрить"
   },
   "add_friend_page": {
     "add_a_friend": "Добавить в друзья",
@@ -31,5 +32,8 @@
   "friend_request_page": {
     "add_a_friend": "Запросы в друзья",
     "nothing_to_show_here": "Здесь нет запросов в друзья..."
+  },
+  "chat_page": {
+    "post": "Отправить"
   }
 }

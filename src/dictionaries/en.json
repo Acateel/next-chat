@@ -18,7 +18,8 @@
     "friend_requests": "Friend requests",
     "menu": "Menu",
     "dashboard": "Dashboard",
-    "close_panel": "Close panel"
+    "close_panel": "Close panel",
+    "close": "Close"
   },
   "add_friend_page": {
     "add_a_friend": "Add a friend",
@@ -31,5 +32,8 @@
   "friend_request_page": {
     "add_a_friend": "Add a friend",
     "nothing_to_show_here": "Nothing to show here..."
+  },
+  "chat_page": {
+    "post": "Post"
   }
 }

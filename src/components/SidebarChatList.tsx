@@ -11,6 +11,9 @@ import UnseenChatToast from './UnseenChatToast'
 interface SidebarChatListProps {
   friends: User[]
   sessionId: string
+  dictionary: {
+    close: string
+  }
 }
 
 interface ExtendedMessage extends Message {
@@ -18,7 +21,11 @@ interface ExtendedMessage extends Message {
   senderName: string
 }
 
-const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
+const SidebarChatList: FC<SidebarChatListProps> = ({
+  friends,
+  sessionId,
+  dictionary,
+}) => {
   const router = useRouter()
   const pathname = usePathname()
   const [locale, setLocale] = useState<string>('')
@@ -56,6 +63,7 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
           senderImg={message.senderImg}
           senderName={message.senderName}
           senderMessage={message.text}
+          dictionary={dictionary}
         />
       ))
 
@@ -76,7 +84,7 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
       pusherClient.unbind('new_message', chatHandler)
       pusherClient.unbind('new_friend', newFriendHandler)
     }
-  }, [sessionId, router, pathname, friends, locale])
+  }, [sessionId, router, pathname, friends, locale, dictionary])
 
   return (
     <ul role="list" className="max-h-[25rem] overflow-y-auto -mx-2 space-y-1">

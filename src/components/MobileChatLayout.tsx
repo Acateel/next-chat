@@ -28,6 +28,7 @@ interface MobileChatLayoutProps {
   unseenRequestCount: number
   dictionary: {
     friend_requests: string
+    close: string
     [key: string]: string
   }
 }
@@ -117,6 +118,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
                               <SidebarChatList
                                 friends={friends}
                                 sessionId={session.user.id}
+                                dictionary={dictionary}
                               />
                             </li>
 
