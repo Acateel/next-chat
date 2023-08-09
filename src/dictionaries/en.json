@@ -1,4 +1,8 @@
 {
+  "login": {
+    "sign_in": "Sign in to your account",
+    "something_went_wrong": "Something went wrong with your login."
+  },
   "dashboard": {
     "recent_cahts": "Recent cahts",
     "nothing_to_show_here": "Nothing to show here...",

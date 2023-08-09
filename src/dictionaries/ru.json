@@ -1,4 +1,8 @@
 {
+  "login": {
+    "sign_in": "Войдите в свой аккаунт",
+    "something_went_wrong":"Что-то пошло не так с вашой авторизацией."
+  },
   "dashboard": {
     "recent_cahts": "Недавные чаты",
     "nothing_to_show_here": "Здесь ничего нет...",
