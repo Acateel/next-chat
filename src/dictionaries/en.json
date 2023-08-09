@@ -15,7 +15,10 @@
     "your_profile_picture": "Your profile picture",
     "your_profile": "Your profile",
     "add_friend": "Add friend",
-    "friend_requests": "Friend requests"
+    "friend_requests": "Friend requests",
+    "menu": "Menu",
+    "dashboard": "Dashboard",
+    "close_panel": "Close panel"
   },
   "add_friend_page": {
     "add_a_friend": "Add a friend",

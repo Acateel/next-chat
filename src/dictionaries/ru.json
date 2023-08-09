@@ -15,7 +15,10 @@
     "your_profile_picture": "Ваше изображение профиля",
     "your_profile": "Ваш профиль",
     "add_friend": "Добавить в друзья",
-    "friend_requests": "Запросы в друзья"
+    "friend_requests": "Запросы в друзья",
+    "menu": "Меню",
+    "dashboard": "Панель",
+    "close_panel": "Закрить панель"
   },
   "add_friend_page": {
     "add_a_friend": "Добавить в друзья",

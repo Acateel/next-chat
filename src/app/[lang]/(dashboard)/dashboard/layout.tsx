@@ -67,6 +67,7 @@ const Layout = async ({ children, params: { lang } }: LayoutProps) => {
           session={session}
           sidebarOptions={sidebarOptions}
           unseenRequestCount={unseenRequestCount}
+          dictionary={dictionary['dashboard_layout']}
         />
       </div>
       <div className="hidden md:flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white dark:bg-slate-700 dark:border-slate-800 px-6">
