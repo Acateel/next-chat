@@ -20,5 +20,9 @@
     "something_went_wrong": "Something went wrong.",
     "friend_request_sent": "Friend request sent!",
     "invalid_email": "Invalid email"
+  },
+  "friend_request_page": {
+    "add_a_friend": "Add a friend",
+    "nothing_to_show_here": "Nothing to show here..."
   }
 }

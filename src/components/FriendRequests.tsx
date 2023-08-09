@@ -1,84 +1,90 @@
-"use client";
+'use client'
 
-import { pusherClient } from "@/lib/pusher";
-import { toPusherKey } from "@/lib/utils";
-import axios from "axios";
-import { Check, UserPlus, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import { pusherClient } from '@/lib/pusher'
+import { toPusherKey } from '@/lib/utils'
+import axios from 'axios'
+import { Check, UserPlus, X } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { FC, useEffect, useState } from 'react'
 
 interface FriendRequestsProps {
-  incomingFriendRequests: IncomingFriendRequest[];
-  sessionId: string;
+  incomingFriendRequests: IncomingFriendRequest[]
+  sessionId: string
+  dictionary: {
+    nothing_to_show_here: string
+  }
 }
 
 const FriendRequests: FC<FriendRequestsProps> = ({
   incomingFriendRequests,
   sessionId,
+  dictionary,
 }) => {
-  const router = useRouter();
+  const router = useRouter()
   const [friendRequests, setFriendRequests] = useState<IncomingFriendRequest[]>(
     incomingFriendRequests
-  );
+  )
 
   useEffect(() => {
     pusherClient.subscribe(
       toPusherKey(`user:${sessionId}:incoming_friend_requests`)
-    );
+    )
 
     const friendRequestsHandler = ({
       senderId,
       senderEmail,
     }: IncomingFriendRequest) => {
-      setFriendRequests((prev) => [...prev, { senderId, senderEmail }]);
-    };
-    pusherClient.bind("incoming_friend_requests", friendRequestsHandler);
+      setFriendRequests((prev) => [...prev, { senderId, senderEmail }])
+    }
+    pusherClient.bind('incoming_friend_requests', friendRequestsHandler)
 
     // clear connection
     return () => {
       pusherClient.unsubscribe(
         toPusherKey(`user:${sessionId}:incoming_friend_requests`)
-      );
-      pusherClient.unbind("incoming_friend_requests", friendRequestsHandler);
-    };
-  }, [sessionId]);
+      )
+      pusherClient.unbind('incoming_friend_requests', friendRequestsHandler)
+    }
+  }, [sessionId])
 
   /**
    * Accept friend request
    * @param senderId friends id
    */
   const acceptFriend = async (senderId: string) => {
-    await axios.post("/api/friends/accept", {
+    await axios.post('/api/friends/accept', {
       id: senderId,
-    });
+    })
 
     setFriendRequests((prev) =>
       prev.filter((request) => request.senderId !== senderId)
-    );
+    )
 
-    router.refresh();
-  };
+    router.refresh()
+  }
 
   /**
    * Deny friend request
    * @param senderId friends id
    */
   const denyFriend = async (senderId: string) => {
-    await axios.post("/api/friends/deny", {
+    await axios.post('/api/friends/deny', {
       id: senderId,
-    });
+    })
 
     setFriendRequests((prev) =>
       prev.filter((request) => request.senderId !== senderId)
-    );
+    )
 
-    router.refresh();
-  };
+    router.refresh()
+  }
 
   return (
     <>
       {friendRequests.length === 0 ? (
-        <p className="text-sm text-zinc-500">Nothing to show here...</p>
+        <p className="text-sm text-zinc-500">
+          {dictionary.nothing_to_show_here}
+        </p>
       ) : (
         friendRequests.map((request) => (
           <div key={request.senderId} className="flex gap-4 items-center">
@@ -102,7 +108,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({
         ))
       )}
     </>
-  );
-};
+  )
+}
 
-export default FriendRequests;
+export default FriendRequests

@@ -20,5 +20,9 @@
     "sometiong_went_wrong": "Что-то пошло не так.",
     "friend_request_sent": "Запрос в друзья отправлен!",
     "invalid_email": "Неверный адрес электронной почты"
+  },
+  "friend_request_page": {
+    "add_a_friend": "Запросы в друзья",
+    "nothing_to_show_here": "Здесь нет запросов в друзья..."
   }
 }
